@@ -12,7 +12,7 @@ pygame.display.set_caption("LaboratorioTiempoReaccion")
 reloj = pygame.time.Clock()
 
 # -------------------------------
-# Rutas de imágenes
+# Rutas de imágenes : SAMU
 # -------------------------------
 RUTA_S10 = "./S10"
 fondo_menu = pygame.image.load(os.path.join(RUTA_S10,"Foto2.jpg")).convert()
@@ -23,7 +23,7 @@ imagen_circulo = pygame.image.load(os.path.join(RUTA_S10,"foto3.jpg")).convert_a
 imagen_circulo = pygame.transform.scale(imagen_circulo, (140, 140))  # tamaño del círculo
 
 # -------------------------------
-# Cargar fuentes
+# Cargar fuentes : SAMU
 # -------------------------------
 RUTA_FUENTE = os.path.join(RUTA_S10,"ProFontIIxNerdFont-Regular.ttf")
 
@@ -39,7 +39,7 @@ def cargar_fuente(tamaño):
 FUENTES = {t: cargar_fuente(t) for t in [24,28,32,36,40,48,64,80,100]}
 
 # -------------------------------
-# Estados del juego
+# Estados del juego : SAMU
 # -------------------------------
 class EstadoJuego(Enum):
     USUARIO = 1
@@ -52,7 +52,7 @@ class EstadoJuego(Enum):
     ENTRENAMIENTO_APUNTE = 8
 
 # -------------------------------
-# Dificultades
+# Dificultades : SAMU
 # -------------------------------
 class Dificultad:
     """
@@ -169,7 +169,7 @@ cargar_bd_reaccion()
 cargar_bd_apunte()
 
 # -------------------------------
-# Variables globales
+# Variables globales : SAMU
 # -------------------------------
 estado = EstadoJuego.USUARIO
 usuario = ""
@@ -218,7 +218,7 @@ def dibujar_boton(rect, texto):
     return hover
 
 # -------------------------------
-# Manejo de eventos
+# Manejo de eventos 
 # -------------------------------
 def actualizar_usuario(evento):
     """Maneja la entrada de nombre de usuario."""
@@ -379,7 +379,7 @@ def dibujar_puntajes():
     texto_centrado("Click o scroll para volver", ALTO-60,48)
 
 # -------------------------------
-# Selector dificultad
+# Selector dificultad  : SAMU
 # -------------------------------
 botones_dificultad = []
 etiquetas_dificultad = list(DIFICULTADES.keys())
@@ -415,7 +415,7 @@ def manejar_dificultad(evento):
         exit()
 
 # -------------------------------
-# Entrenamiento de puntería
+# Entrenamiento de puntería : SAMU
 # -------------------------------
 circulo_apunte = None
 puntuacion_apunte = 0
@@ -480,7 +480,7 @@ def dibujar_apunte():
     texto_centrado("Haz click en el círculo lo más rápido posible",300,48)
 
 # -------------------------------
-# Bucle principal
+# Bucle principal    : SAMU
 # -------------------------------
 ejecutando = True
 while ejecutando:
