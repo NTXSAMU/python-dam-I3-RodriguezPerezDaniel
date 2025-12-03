@@ -80,7 +80,7 @@ RUTA_DB_APUNTE = os.path.join(RUTA_S10,"aim_scores.json")
 bd_reaccion = {"jugadores": {}}
 bd_apunte = {"jugadores": {}}
 
-def cargar_bd_reaccion():
+def cargar_bd_reaccion(): #Andrés Pérez Reyes
     """
     Carga la base de datos de tiempos de reacción desde JSON.
     """
@@ -96,12 +96,12 @@ def cargar_bd_reaccion():
         bd_reaccion = {"jugadores": {}}
         guardar_bd_reaccion()
 
-def guardar_bd_reaccion():
+def guardar_bd_reaccion(): #Andrés Pérez Reyes
     """Guarda la base de datos de tiempos de reacción en JSON."""
     with open(RUTA_DB_REACCION,"w") as f:
         json.dump(bd_reaccion,f,indent=4)
 
-def cargar_bd_apunte():
+def cargar_bd_apunte(): #JAVI
     """
     Carga la base de datos de puntuaciones de Aim Training.
     """
@@ -117,12 +117,12 @@ def cargar_bd_apunte():
         bd_apunte = {"jugadores": {}}
         guardar_bd_apunte()
 
-def guardar_bd_apunte():
+def guardar_bd_apunte(): #JAVI
     """Guarda la base de datos de puntuaciones de Aim Training."""
     with open(RUTA_DB_APUNTE,"w") as f:
         json.dump(bd_apunte,f,indent=4)
 
-def registrar_usuario(nombre):
+def registrar_usuario(nombre): #Andrés Pérez Reyes
     """
     Registra un usuario nuevo si no existe en ambas bases de datos.
     """
@@ -133,7 +133,7 @@ def registrar_usuario(nombre):
     guardar_bd_reaccion()
     guardar_bd_apunte()
 
-def actualizar_tiempo(nombre, tiempo):
+def actualizar_tiempo(nombre, tiempo): #Andrés Pérez Reyes
     """
     Actualiza el mejor tiempo de reacción de un usuario.
     """
@@ -143,7 +143,7 @@ def actualizar_tiempo(nombre, tiempo):
         return True
     return False
 
-def actualizar_puntuacion_apunte(nombre, puntos):
+def actualizar_puntuacion_apunte(nombre, puntos): #JAVI
     """
     Actualiza la puntuación de Aim Training de un usuario si es mejor.
     """
@@ -151,7 +151,7 @@ def actualizar_puntuacion_apunte(nombre, puntos):
         bd_apunte["jugadores"][nombre] = puntos
         guardar_bd_apunte()
 
-def obtener_todos_los_puntajes(modo="reaccion"):
+def obtener_todos_los_puntajes(modo="reaccion"): #JAVI
     """
     Retorna todos los puntajes ordenados según modo.
     """
@@ -193,21 +193,20 @@ VELOCIDAD_SCROLL = 40
 # -------------------------------
 # Funciones de interfaz
 # -------------------------------
-def dibujar_degradado(c1, c2):
+def dibujar_degradado(c1, c2): #Alexis Barrera
     """Dibuja un fondo degradado vertical."""
     for y in range(ALTO):
-        r = int(c1[0]*(1 - y / (ALTO-1)) + c2[0] * (y / (ALTO-1)))
-        g = int(c1[1]*(1 - y / (ALTO-1)) + c2[1] * (y / (ALTO-1)))
-        b = int(c1[2]*(1 - y / (ALTO-1)) + c2[2] * (y / (ALTO-1)))
-        pygame.draw.line(pantalla, (r,g,b), (0,y), (ANCHO,y))
+        t = y / (ALTO - 1)
+        color = tuple(int(c1[i] * (1 - t) + c2[i] * t) for i in range(3))
+        pygame.draw.line(pantalla, color, (0, y), (ANCHO, y))
 
-def texto_centrado(texto, y, tamaño=32, color=(255,255,255)):
-    """Dibuja texto centrado horizontalmente en la pantalla."""
-    fuente = FUENTES.get(tamaño, FUENTES[32])
-    renderizado = fuente.render(texto, True, color)
-    pantalla.blit(renderizado, renderizado.get_rect(center=(ANCHO//2, y)))
+def texto_centrado(texto, y, tamaño=32, color=(255,255,255)):  #Alexis Barrera
+        """Dibuja texto centrado horizontalmente en la pantalla."""
+        fuente = FUENTES.get(tamaño, FUENTES[32])
+        renderizado = fuente.render(texto, True, color)
+        pantalla.blit(renderizado, renderizado.get_rect(center=(ANCHO//2, y)))
 
-def dibujar_boton(rect, texto):
+def dibujar_boton(rect, texto):  #Alexis Barrera
     """Dibuja un botón con texto, cambia de color al pasar el mouse."""
     hover = rect.collidepoint(pygame.mouse.get_pos())
     color_fondo = (255,255,255) if hover else (200,200,200)
@@ -217,7 +216,7 @@ def dibujar_boton(rect, texto):
     pantalla.blit(t, t.get_rect(center=rect.center))
     return hover
 
-def dibujar_usuario():
+def dibujar_usuario():  #Alexis Barrera
     """Dibuja la pantalla de entrada de usuario."""
     pantalla.blit(fondo_usuario, (0, 0))
     texto_centrado("Introduce nombre de usuario:",300,48)
@@ -225,7 +224,7 @@ def dibujar_usuario():
     txt = FUENTES[48].render(texto_entrada, True, (0,0,0))
     pantalla.blit(txt, (ANCHO//2 - 180, ALTO//2 - 20))
 
-def dibujar_menu():
+def dibujar_menu():  #Alexis Barrera
     """Dibuja el menú principal."""
     pantalla.blit(fondo_menu, (0, 0))
     texto_centrado("Demuestra tus reflejos",150,80)
