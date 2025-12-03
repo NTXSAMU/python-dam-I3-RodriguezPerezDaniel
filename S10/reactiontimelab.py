@@ -235,46 +235,54 @@ def dibujar_menu():  #Alexis Barrera
     txt = FUENTES[36].render(f"Usuario: {usuario}", True, (255,255,255))
     pantalla.blit(txt,(300,70))
 
-def dibujar_espera():
-    """Dibuja pantalla de espera antes de reaccionar."""
-    dibujar_degradado((20,20,20),(60,60,60))
-    texto_centrado("¿PREPARADO?",500,64)
-    puntos = int((time.time() - inicio_retraso)*2)%4
-    texto_centrado("."*puntos,600,80)
+def dibujar_espera(): # Miguel Ángel
+    """Dibuja la pantalla de espera antes de reaccionar (simplificada)."""
+    dibujar_degradado((20,20,20), (60,60,60))
+    texto_centrado("¿PREPARADO?", 500, 64)
+    # calcular puntos de animación (0..3). Si inicio_retraso es None -> 0
+    puntos = int((time.time() - inicio_retraso) * 2) % 4 if inicio_retraso else 0
+    texto_centrado("." * puntos, 600, 80)
 
-def dibujar_click():
-    """Dibuja la pantalla de clic de reacción."""
-    dibujar_degradado((150,0,0),(80,0,0))
-    texto_centrado("¡YA!",500,100)
-    texto_centrado("Pulsa rápido",650,48)
+def dibujar_click(): #Miguel Ángel 
+    """Dibuja la pantalla donde se indica que hay que clicar (simplificada)."""
+    dibujar_degradado((150,0,0), (80,0,0))
+    texto_centrado("¡YA!", 500, 100)
+    texto_centrado("Pulsa rápido", 650, 48)
 
-def dibujar_resultado():
-    """Dibuja pantalla de resultados de reacción."""
-    dibujar_degradado((0,160,100),(0,60,20))
-    reaccion = round(tiempo_fin - tiempo_inicio,3)
-    texto_centrado("Tiempo de reacción:",400,64)
-    texto_centrado(f"{reaccion} segundos",550,80)
-    texto_centrado(mensaje,650,48)
-    texto_centrado("Click o espacio para reiniciar",750,48)
+def dibujar_resultado(): # Miguel Ángel
+    """Dibuja la pantalla de resultado de reacción (simplificada)."""
+    dibujar_degradado((0,160,100), (0,60,20))
+    # calcular reacción con protección si faltan tiempos
+    reaccion = round((tiempo_fin - tiempo_inicio), 3) if (tiempo_inicio and tiempo_fin) else 0.0
+    texto_centrado("Tiempo de reacción:", 400, 64)
+    texto_centrado(f"{reaccion} segundos", 550, 80)
+    texto_centrado(mensaje, 650, 48)
+    texto_centrado("Click o espacio para reiniciar", 750, 48)
 
-def dibujar_puntajes():
-    """Dibuja la pantalla de puntuaciones."""
+def dibujar_puntajes(): # Miguel Ángel
+    """Dibuja la pantalla de puntuaciones (simplificada)."""
     global scroll_y
-    dibujar_degradado((10,10,40),(0,0,0))
-    y = 100 + scroll_y
-    texto_centrado("SCOREBOARD - REACCIÓN",y,64)
-    y+=80
-    for u,s in obtener_todos_los_puntajes("reaccion"):
-        texto_centrado(f"{u} - {round(s,3)} s",y,48)
-        y+=60
-    y+=80
-    texto_centrado("SCOREBOARD - AIM TRAINING",y,64)
-    y+=80
-    for u,s in obtener_todos_los_puntajes("apunte"):
-        texto_centrado(f"{u} - {round(s,2)} pts",y,48)
-        y+=60
-    texto_centrado("Click o scroll para volver", ALTO-60,48)
+    dibujar_degradado((10,10,40), (0,0,0))
 
+    y = 100 + scroll_y
+    texto_centrado("SCOREBOARD - REACCIÓN", y, 64)
+    y += 80
+
+    # obtener y dibujar puntajes de reacción (ordenados ascendente)
+    for nombre, tiempo in obtener_todos_los_puntajes("reaccion"):
+        texto_centrado(f"{nombre} - {round(tiempo,3)} s", y, 48)
+        y += 60
+
+    y += 80
+    texto_centrado("SCOREBOARD - AIM TRAINING", y, 64)
+    y += 80
+
+    # obtener y dibujar puntajes de aim (ordenados descendente)
+    for nombre, puntos in obtener_todos_los_puntajes("apunte"):
+        texto_centrado(f"{nombre} - {round(puntos,2)} pts", y, 48)
+        y += 60
+
+    texto_centrado("Click o scroll para volver", ALTO - 60, 48)
 
 # -------------------------------
 # Manejo de eventos
